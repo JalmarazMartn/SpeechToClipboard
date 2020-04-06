@@ -9,4 +9,4 @@ The tool is very simple:
 -	If “Copy to Clipboard” is checked all the text content will be copied to the Clipboard automatically.
 -	If you want to start again, push “Start” button.
  To execute in web go to https://jalmarazmartn.github.io/SpeechToClipboard/SpeechToText.html
- Advice: I don´t recommend execute directly from the Hub, works better if you copy to your PC the Html file.
+
