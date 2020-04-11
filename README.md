@@ -7,6 +7,7 @@ I made a home-made Speech recognition, for these reasons:
 The tool is very simple:
 -	Open the site, select your language, and begin to speak. You´ll see the transcription in text area bellow. 
 -	If “Copy to Clipboard” is checked all the text content will be copied to the Clipboard automatically.
--	If you want to start again, push “Start” button.
+-	If you want to start again, push “Clear /Start Listening” button. Almost always you lose the focus, you need to push again the button.
+- If you keep the focus in the button, could be easy to make the cycle, “Push Start Button”- “Alt Tab to the document”-“Paste”- “Alt Tab to the browser”- “Push Start Button” etc.
  To execute in web go to https://jalmarazmartn.github.io/SpeechToClipboard/SpeechToText.html
 
