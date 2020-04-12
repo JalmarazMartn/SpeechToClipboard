@@ -21,21 +21,20 @@
 </label>
 <button type="button" onclick="StartListening()">Clear/Start Listening</button>
 <br></br>     
-  <textarea id="SpeechArea" rows="40" cols="70" style="border: none; font-size: 90% ;
+  <textarea id="SpeechArea" onblur="HandWrite()"
+  rows="40" cols="70" style="border: none; font-size: 90% ;
   font-family:Arial, Helvetica, sans-serif;"></textarea>  
   <br></br>     
 
   <script>
     var CheckCopyClip = document.getElementById("CopyClip");
     CheckCopyClip.checked = true;    
-    //window.addEventListener('keypress',alert('Pruueba'));
-    //window.addEventListener('focus', StartListening);
+    let finalTranscript = '';
     function StartListening(){
 
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
     document.getElementById("SpeechArea").value = '';
-    let finalTranscript = '';
-
+    finalTranscript = '';
     let recognition = new window.SpeechRecognition();
     recognition.interimResults = true;
     recognition.maxAlternatives = 10;
@@ -48,16 +47,56 @@
         let transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
           finalTranscript += transcript;
+          finalTranscript = CapitalizeSentences(finalTranscript);          
         } else {
           interimTranscript += transcript;
         }
       }
-
       document.getElementById("SpeechArea").value = finalTranscript + ' ' + interimTranscript;
-      if (CheckCopyClip.checked == true)
-        {navigator.clipboard.writeText(finalTranscript + interimTranscript).then()};
+      CopyTextAreaToClip();
     }
     recognition.start();  
+    }
+    function HandWrite(){
+      finalTranscript = document.getElementById("SpeechArea").value;
+      CopyTextAreaToClip();
+    }
+    function CopyTextAreaToClip(){      
+      if (CheckCopyClip.checked == true)
+        {navigator.clipboard.writeText(document.getElementById("SpeechArea").value).then()};
+    }
+    function CapitalizeSentences(inString="")
+    {
+      var StringReturn = "";
+      var IsStartOfSentence = false;
+      var PreviousChar = "";      
+      var CurrentChar = "";
+      for (var i = 0; i < inString.length; i++) {
+        CurrentChar = inString.substring(i,i+1);
+        IsStartOfSentence = (i ==0) | (PreviousChar == ".");
+        if (IsStartOfSentence){
+          StringReturn = StringReturn + CurrentChar.toUpperCase();
+        }
+        else
+        {StringReturn = StringReturn + CurrentChar}        
+        if (CurrentChar !== " ")
+        {PreviousChar = CurrentChar}
+      }
+      return(StringReturn);      
+    }
+    function CapitalizeLetter(inString="",Position=0){
+      if (inString == "") 
+      {return(inString)}
+
+      var StringReturn = "";
+      if (Position > 0)
+      {StringReturn = inString.substring(0,Position-1)}
+      StringReturn = StringReturn + inString.charAt(Position).toUpperCase();
+      if (Position < inString.length-1)
+      {
+        StringReturn = StringReturn +  inString.substring(Position+1);
+      }
+      return(StringReturn);
     }
   </script>
 
